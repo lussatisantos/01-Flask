@@ -18,7 +18,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
     
-class Post(db.model):
+class Post(db.Model):
     __tablename__ = 'posts'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,3 +33,13 @@ class Post(db.model):
     
     def __repr__(self):
         return '<Post %r>' % self.id
+    
+class Follow(db.Model):
+    __tablename__ = 'follow'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    user = db.relationship('User', foreign_keys=user_id)
+    follower = db.relationship('User', foreign_keys=follower_id)
